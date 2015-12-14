@@ -10,7 +10,7 @@ each as wide as a page.
 The trace has been smeared by the printing+scanning process.
 The Mathematica notebook given here estimates the original
 trace from the distorted image and converts it to the sound file
-```america.wav```.
+`america.wav`.
 
 # Doing better
 
