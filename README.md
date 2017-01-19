@@ -25,6 +25,9 @@ by the signal to expose a photographic emulsion.  That implies that
 the exposure is probably most intense at the peaks of the deflection
 because the beam spent more time there.
 
+The article did state that the particular oscillograph used to produce
+the trace couldn't respond to signals above about 2000 Hz.
+
 ## Printing
 
 The magazine probably used some sort of halftone mask to reproduce
