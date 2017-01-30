@@ -1,0 +1,18 @@
+digraph {
+  rankdir = LR
+  node [ shape = rect
+        fontname = helvetica
+        fontsize = 20]
+  a [ image = "microphone.png" labelloc = b]
+  b [ label = "Oscillograph"]
+  c [ label = "Magazine"]
+  d [ label = "Google Scan"]
+  e [ label = "Extract"]
+  f [ label = "Play"]
+  a -> b
+  b -> c [ label = "photograph"]
+  c -> d [ label = "halftone"]
+  d -> e [ label = "JPEG"]
+  e -> f [ label = "Audio"]
+  e [color = red ]
+}
