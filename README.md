@@ -10,7 +10,9 @@ each as wide as a page.
 The trace has been smeared by the printing+scanning process.
 The Mathematica notebook given here estimates the original
 trace from the distorted image and converts it to the sound file
-`america.wav`.
+`rstrip.wav`.
+
+An earlier attempt to do this is in the directory [first](first).
 
 # Doing better
 
@@ -24,29 +26,39 @@ According to the article, the oscillograph used a beam of light deflected
 by the signal to expose a photographic emulsion.  That implies that
 the exposure is probably most intense at the peaks of the deflection
 because the beam spent more time there.
+We might use the graylevel to estimates of the velocity of the beam.
+
+The beam profile looks roughly Gaussian in some of the samples, 
+so that knowledge might help to recover individual components
+in the smeared parts. 
 
 The article did state that the particular oscillograph used to produce
 the trace couldn't respond to signals above about 2000 Hz.
 
 ## Printing
 
-The magazine probably used some sort of halftone mask to reproduce
-the picture.  This would have aliased the higher (spatial) frequency
-components of the image.
+The magazine probably used some sort of halftone process to reproduce
+the picture, which allows more gray levels to be resolved at the
+expense of lesser spatial resolution.  This would have the effect
+of smearing the waveform image, perhaps even nonuniformly.
 
 ## Scanning
 
 The scanner also would have introduced a pixel grid.  It was probably
-much finer than the halftone mask, so it's aliasing is probably
+much finer than the halftone mask, so its aliasing is probably
 comparatively negligible.
 
 
 # Extracting the trace images
 
-The trace appeared in the original article in two "strips".  I cut them
-out of the rendered page using a screenshot utility.  The result is two
-PNG files, which are unfortunately not the same height, even though they
-represent the same range of amplitudes.
+The trace appeared in the original article in two "strips".  I clipped
+them from the page images and concatenated the strips to give one image,
+and then cropped away the parts that weren't the waveform.
+
+The strips have different statistics (distributions of pixel intensities),
+but I found that equalizing them didn't make much difference because
+the algorithm I used dependend on local maxima and wasn't sensitive
+to global variation.
 
 # Extracting the signal
 
@@ -65,6 +77,14 @@ imperfect rendering of it that has been printed (through a halftone
 screen?) and then scanned (by Google).  Therefore, we may find that each
 row doesn't have a single peak, because the signal from successive
 instants may have been smeared.
+
+Furthermore, there's certainly aliasing of any frequencies above 1200 Hz.
+The article says that the oscillograph could resolve frequencies up to about
+2000 Hz, and that the utterance is just under one second. The cropped waveform
+image is about 2250 pixels wide, and each column is a sample. Our sampling rate
+is therefore likely about 2500 Hz. That's not much more than the highest
+frequency in the signal, and far below the 4000 Hz that we'd need to avoid
+aliasing.
 
 For now, we'll see how good it sounds if we just take the maximum
 intensity value.

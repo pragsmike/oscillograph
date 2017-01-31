@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN"
+        "HTMLFiles/xhtml-math11-f.dtd">
+
+<!-- Created with the Wolfram Language : www.wolfram.com -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <title>
+  slides
+ </title>
+ <link href="HTMLFiles/slides.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="font-size: 150%;">
+
+<p class='SlideShowNavigationBar' style='text-align: center;margin-left: 0px;margin-right: 0px;margin-top: 0px;margin-bottom: 0px;'>
+ <a id="SlideShowHeader"></a>
+ <img src="HTMLFiles/slides_1.gif" alt="slides_1.gif" width="1224" height="30" style="vertical-align:middle" />
+</p>
+
+<p class="Title">
+ Data is Everywhere
+</p>
+
+
+
+<p class="Subtitle">
+ But you might have to squint to see it
+</p>
+
+
+
+<p class="Text">
+ 
+</p>
+
+
+
+<p class="Subsection">
+ &nbsp;&nbsp;&nbsp;&nbsp;Mike Gallaher&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pragsmike@gmail.com
+</p>
+
+
+
+<p class="Text">
+ <br /><br />
+</p>
+
+
+
+<p class="Text">
+ You can find data in places you didn&rsquo;t expect, though sometimes you have to<br />squint a little, and it doesn&rsquo;t have to be big to be interesting. In this talk<br />I&rsquo;ll show how sound can be extracted from a 2D image of an oscillogram trace<br />printed in an old magazine article. This is an example of what Patrick Feaster<br />calls &ldquo;educed audio&rdquo;, where audio is derived from representations of sounds<br />that were not intended to be played, such as photographs of phonograph records.<br />
+</p>
+
+
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ Examples of Found Data
+</p>
+
+
+
+<p class="Text">
+ Some data was never meant to be recognized or interpreted, but we can extract it anyway
+</p>
+
+
+
+<p class="Subsection">
+ Educed Audio
+</p>
+
+
+
+<p class="Item">
+ popularized by <span><a href="http://www.phonozoic.net/"><span class="HyperlinkInline">Patrick Feaster</span></a></span>; see <span><a href="http://www.dust-digital.com/feaster/"><span class="HyperlinkInline">Pictures of Sound</span></a></span>
+</p>
+
+
+
+<p class="Item">
+ from pictures of waveforms in magazines
+</p>
+
+
+
+<p class="Item">
+ from photographs of phonograph records
+</p>
+
+
+
+<p class="Subsection">
+ Data Modulated in Audio
+</p>
+
+
+
+<p class="Item">
+ Morse Code in songs, movies, games
+</p>
+
+
+
+<p class="Item">
+ HF Radio Packets in movie soundtrack
+</p>
+
+
+
+<p class="Subsection">
+ Data Modulated in Video
+</p>
+
+
+
+<p class="Item">
+ The Famous Potato Chip Bag
+</p>
+
+
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ The Waveform in the Magazine
+</p>
+
+
+
+<p class="Text">
+ From a <span><a href="http://books.google.com/books?id=WioDAAAAMBAJ&printsec=frontcover&source=gbs_ge_summary_r&cad=0#v=onepage&q&f=false"><span class="HyperlinkInline">Nov 1923 Popular Science</span></a></span> article on telephony, <span style='font-style: italic;'>The Great American Voice</span> by R. W. King, editor <span style='font-style: italic;'>Bell System Technical Journal</span>.<br />The article includes a reproduction of an oscillograph trace, originally 3 feet long, rendered as two strips each as wide as a page.
+</p>
+
+
+
+<p class="Subsubsection">
+ Page One
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/slides_2.gif" alt="slides_2.gif" width="1673" height="2358" style="vertical-align:middle" />
+</p>
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ The Waveform in the Magazine
+</p>
+
+
+
+<p class="Subsection">
+ Page Two
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/slides_3.gif" alt="slides_3.gif" width="1673" height="2352" style="vertical-align:middle" />
+</p>
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ The Waveform in the Magazine
+</p>
+
+
+
+<p class="Subsection">
+ The Question: Is this really someone saying &ldquo;America&rdquo;?
+</p>
+
+
+
+<p class="Text">
+ Much information has been lost, so it won&rsquo;t sound very good, but we should be able to at least tell whether it&rsquo;s &ldquo;America&rdquo; or not.
+</p>
+
+
+
+<p class="Subsection">
+ The raw input
+</p>
+
+
+
+<p class="Text">
+ Here&rsquo;s the picture of the waveform clipped from the image and stitched together from the pieces.
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/slides_4.gif" alt="slides_4.gif" width="1673" height="130" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/slides_5.gif" alt="slides_5.gif" width="1673" height="170" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ Our strategy will take advantage of the fact that the original oscillograph trace<br />is truly a single-valued function, because the beam scans left to right and never<br />&ldquo;doubles back&rdquo; to the left.&nbsp;&nbsp;That means that for each instant of time,<br />the trace has exactly one scalar value.<br /><br />Our task then is to extract that scalar value for each time instant.<br /><br /><br />
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/slides_6.png" alt="slides_6.png" width="4" height="27" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/slides_7.png" alt="slides_7.png" width="4" height="27" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/slides_8.png" alt="slides_8.png" width="12" height="130" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/slides_9.png" alt="slides_9.png" width="4" height="27" style="vertical-align:middle" />
+</p>
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ The Waveform in the Magazine
+</p>
+
+
+
+<p class="Text">
+ First let&rsquo;s crop the image to isolate just the waveform part.
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/slides_10.gif" alt="slides_10.gif" width="1673" height="95" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ The first column does in fact show a sharp peak that&rsquo;s obviously the position of the trace.
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/slides_11.gif" alt="slides_11.gif" width="540" height="358" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ But we don&rsquo;t have to look far to find a column where it&rsquo;s not so obvious:
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/slides_12.gif" alt="slides_12.gif" width="540" height="358" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ Here&rsquo;s an interactive way to explore the image column-by-column:
+</p>
+
+
+
+<p class="Output">
+ <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
+<script type="text/javascript">
+var cdf = new cdfplugin();
+cdf.embed('HTMLFiles/slides_13.cdf', 435, 340);
+</script>
+</p>
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ The Waveform in the Magazine
+</p>
+
+
+
+<p class="Subsection">
+ Distortion from halftone and undersampling
+</p>
+
+
+
+<p class="Text">
+ The problem is that we&rsquo;re not working with the original oscillograph.&nbsp;&nbsp;We have an imperfect rendering<br />of it that has been printed via a halftone process and then scanned (by Google).&nbsp;&nbsp;The halftone<br />process reduces spatial resolution, to get better resolution of intensity (gray values).<br /><br />Furthermore, the article says the oscillograph can resolve frequencies up to about 2000 Hz,<br />so we&rsquo;d have to sample at 4000 Hz to avoid aliasing.&nbsp;&nbsp;The image is around 2200 pixels wide,<br />and the utterance is about one second, so our sampling frequency is around 2500 Hz -- not<br />much greater than the maximum signal frequency, and much less than 4000 Hz.<br /><br />Therefore, we may find that each row doesn&rsquo;t have a single peak, because the signal<br />from successive instants may have been smeared by halftoning and aliased due to undersampling.
+</p>
+
+
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ The Waveform in the Magazine
+</p>
+
+
+
+<p class="Subsection">
+ Finally, the audio!
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/slides_14.gif" alt="slides_14.gif" width="1650" height="151" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/slides_15.gif" alt="slides_15.gif" width="375" height="173" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ <span><a href="rstrip.wav" ><span class="HyperlinkInline">Recovered</span></a></span>
+</p>
+
+
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ Data Modulated in Audio
+</p>
+
+
+
+<p class="Subsection">
+ Morse Code in music: <span><a href="https://www.youtube.com/watch?v=47YAcpCa5dM&feature=youtu.be"><span class="HyperlinkInline">B-52&rsquo;s Planet Claire</span></a></span>
+</p>
+
+
+
+<p class="Text">
+ <span><a href="https://www.youtube.com/watch?v=47YAcpCa5dM&feature=youtu.be"><span class="HyperlinkInline"></span></a></span>
+</p>
+
+
+
+<p class="Text">
+ This is from a Canadian marine weather station CFH, which sent weather reports periodically.&nbsp;&nbsp;<br />Between bulletins, it repeated the sequence heard in the song.<br />In those days (up until early 1990s) the transmissions were in Morse code.<br />Nowadays, the station sends them in a format known as <span><a href="https://www.youtube.com/watch?v=Fx-iQlwVsE0"><span class="HyperlinkInline">STANAG.</span></a></span>
+</p>
+
+
+
+<p class="Text">
+ NAWS DE CFH II ZKR F1394
+</p>
+
+
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ Data Modulated in Audio
+</p>
+
+
+
+<p class="Subsection">
+ Morse Code in music: <span><a href="https://en.wikipedia.org/wiki/Tubular_Bells"><span class="HyperlinkInline">Mike Oldfield Tubular Bells</span></a></span>
+</p>
+
+
+
+<p class="Text">
+ This was (presumably) an unintentional inclusion.&nbsp;&nbsp;This album was recorded in 1973 in England,<br />not far from a VLF radio station <span><a href="https://en.wikipedia.org/wiki/Rugby_Radio_Station"><span class="HyperlinkInline">GBR</span></a></span> which operated at 16 kHz.&nbsp;&nbsp;This happens<br />to be in the audio range, and leaked into the studio equipment somehow.<br /><br />Here&rsquo;s a <span><a href="https://www.youtube.com/watch?v=L2W1x6Rb9hI&feature=youtu.be&t=9m53s"><span class="HyperlinkInline">nice video</span></a></span> that demonstrates extracting the signal using an SDR program.<br />
+</p>
+
+
+
+<p class="Text">
+ Alan Cordwell offers <span><a href="http://alancordwell.co.uk/personal/index.php"><span class="HyperlinkInline">this theory</span></a></span> about how the signal might have been introduced:
+</p>
+
+
+
+<p class="Text">
+ Tubular Bells was recorded in late 1972 and early 1973 at The Manor Studio, Shipton on Cherwell. <br />This is about 35 miles from Rugby -- not exactly on the back doorstep. <br />There is no evidence of hum on the recordings so general poor shielding of a cable for example is unlikely. <br />In my view, it could have been a playback head or dynamic mic whose coil just happened to be resonant at 16kHz. <br />It would be interesting to find other recordings made at Manor and see if they also have this signal present on them.
+</p>
+
+
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ Data Modulated in Audio
+</p>
+
+
+
+<p class="Text">
+ AX.25 Packet in Movie Soundtrack: <span><a href="http://swling.com/blog/wp-content/uploads/2016/01/Scotty-Beam-Up-Star-Trek-IV.mp3"><span class="HyperlinkInline">Star Trek IV</span></a></span>
+</p>
+
+
+
+<p class="Text">
+ <span><a href="http://swling.com/blog/2016/01/how-bob-mcgwier-used-a-cray-2-supercomputer-to-decode-a-ham-radio-transmission-heard-in-star-trek-iv/"><span class="HyperlinkInline">How Bob McGwier used a Cray 2 to decode a ham radio transmission heard in Star Trek IV</span></a></span><br />
+</p>
+
+
+
+<p class="Text">
+ After decoding the noisy FSK signal to yield a binary NRZI-encoded bits, Bob says:
+</p>
+
+
+
+<p class="ItemParagraph">
+ I took the bits to Phil Karn, KA9Q and he decoded the NRZI data and proved beyond a shadow of a doubt that <br />it was indeed an HF amateur radio packet. <br />It was WA8ZCN-0 sending an RR for NR-3 to N6AEZ on 20 meters. <br />I got Bill Harrigill, WA8ZCN on the phone and he agrees that it was probably him.
+</p>
+
+
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ Data in Video
+</p>
+
+
+
+<p class="Subsection">
+ <span><a href="http://news.mit.edu/2014/algorithm-recovers-speech-from-vibrations-0804"><span class="HyperlinkInline">The Famous Potato Chip Bag</span></a></span>
+</p>
+
+
+
+<p class="Text">
+ Researchers at MIT, Microsoft, and Adobe have developed an algorithm that can reconstruct an audio signal <br />by analyzing minute vibrations of objects depicted in video. <br />In one set of experiments, they were able to recover intelligible speech from the vibrations of a potato-chip bag <br />photographed from 15 feet away <span style='font-weight: bold;'>through soundproof glass</span>. [emphasis mine]
+</p>
+
+
+
+<p class="SlideShowNavigationBar">
+ 
+</p>
+
+
+
+<p class="Section">
+ Data in Video
+</p>
+
+
+
+<p class="Subsection">
+ <span><a href="http://news.mit.edu/2012/amplifying-invisible-video-0622"><span class="HyperlinkInline">Amplifying Invisible Video</span></a></span>
+</p>
+
+
+
+<p class="Text">
+ MIT&rsquo;s Computer Science and Artificial Intelligence Laboratory (CSAIL)
+</p>
+
+
+
+
+
+
+<div style="font-family:Helvetica; font-size:11px; width:100%; border:1px none #999999; border-top-style:solid; padding-top:2px; margin-top:20px;">
+ <a href="http://www.wolfram.com/language/" style="color:#000; text-decoration:none;">
+  <span style="color:#555555">Created with the Wolfram Language</span> 
+ </a>
+</div>
+</body>
+
+</html>
