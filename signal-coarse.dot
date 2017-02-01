@@ -9,7 +9,7 @@ digraph {
   d [ label = "Google Scan"]
   e [ label = "Extract"]
   f [ label = "Play"]
-  a -> b
+  a -> b [ label = "voltage"]
   b -> c [ label = "photograph"]
   c -> d [ label = "halftone"]
   d -> e [ label = "JPEG"]
